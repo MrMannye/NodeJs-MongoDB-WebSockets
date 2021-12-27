@@ -1,6 +1,5 @@
 
 // ARCHIVO QUE VA A CONTENER LAS RUTAS QUE VAMOS A USAR EN NUESTRO INDEX
-
 const express = require("express");
 const router = express.Router();
 const response = require('../../network/response');
@@ -25,6 +24,24 @@ router.post('/', async (req,res) => {
         console.log(action)
     } catch (error){
         response.error(req,res,error, 500);
+    }
+})
+
+router.patch('/:id', async(req,res) => {
+    try{
+        const action = await controller.updateMessages(req.params.id, req.body.text);
+        response.success(req,res,action,200);
+    }catch(err){
+        response.error(req,res,err,500);
+    }
+})
+
+router.delete('/:id', async(req,res) => {
+    try {
+        const action = await controller.deleteMessage(req.params.id);
+        response.success(req,res,action,200);
+    } catch (err) {
+        response.error(req,res,err,500);
     }
 })
 
