@@ -6,15 +6,19 @@ const router = express.Router();
 const response = require('../../network/response');
 const controller = require('./controller')
 
-router.get('/', (req,res) => {
-    console.log(req.headers);
-    res.header({
-        "custom-header": "Valor Personalizado",
-    })
-    response.success(req,res,"Lista de mensajes");
+router.get('/', async (req,res) => {
+    try{
+        const action = await controller.getMessages();
+        response.success(req,res,action, 200);
+    }catch(err){
+        response.error(req,res,err,500);
+    }
 })
 
 router.post('/', async (req,res) => {
+    // FUCNIONES ASINCRONA, INTENTAMOS Y ESPERAMOS A QUE SE RESUELVA LA PROMESA DE NUESTRA FUNCION 
+    // EN CASO DE QUE SE RESUELVA "TRY" TOMA COMO RESUELTA LA PROMESA Y EJECUTA SUCCESS
+    // EN CASO CONTRARIO TENEMOS UN REJECT Y PASAMOS AL CATCH
     try{
         const action = await controller.addMessage(req.body.user,req.body.message)
         response.success(req,res,action, 200);
