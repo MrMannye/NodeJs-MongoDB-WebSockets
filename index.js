@@ -4,7 +4,9 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 // IMPORTAMOS NUESTRAS RUTAS PARA PODER USARLAS 
 const router = require('./network/routes')
+const db = require('./db')
 
+db();
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true,

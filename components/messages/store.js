@@ -1,11 +1,4 @@
-const mongoose = require('mongoose');
 const Model = require('./model')
-
-mongoose.Promise = global.Promise;
-mongoose.connect("mongodb+srv://manu:ngfq5J9kO0kJfvwo@cluster0.clme8.mongodb.net/Curso_NodeJs?retryWrites=true&w=majority",{
-    useNewUrlParser: true
-})
-console.log("[db] Conexion exitosa")
 
 const add = (message) => {
     return new Promise(async (resolve,reject) => {
