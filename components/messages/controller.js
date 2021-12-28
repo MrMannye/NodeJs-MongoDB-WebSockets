@@ -12,7 +12,7 @@ const addMessage = async (user,message) => {
         const fullMessage = {
             user: user,
             message, message,
-            data: new Date()
+            date: new Date()
         }
         // AGREGAMOS UNA FUNCION ASINCRONA PORQUE ESTAMOS DENTRO DE UNA FUNCION PROMESA
         // Y LA FUNCION AWAIT NECESITA UNA FUNCION ASINCRONA
@@ -27,9 +27,13 @@ const addMessage = async (user,message) => {
 }
 
 const getMessages = () =>{
-    return new Promise((resolve,reject) => {
-        const dbMessage = store.getStore();
-        resolve(dbMessage);
+    return new Promise(async(resolve,reject) => {
+        try {
+            const dbMessage = await store.getStore();
+            resolve(dbMessage);
+        } catch (error) {
+            reject(error);
+        }
     })
 }
 

@@ -15,8 +15,16 @@ const add = (message) => {
 }
 
 const getStore = async () => {
-    const messages = await Model.find();
-    return messages;
+    return new Promise((resolve,reject) => {
+        Model.find({})
+            .populate('user') // CAMPO DE NUESTRO MODELO ACTUAL QUE ESTAMOS REFERENCIANDO
+            .exec((error, populated) => {
+                if(error){
+                    reject("error")
+                }
+                resolve(populated)
+            })
+    })
 }
 
 const update = (id,message) => {
