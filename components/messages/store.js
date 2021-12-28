@@ -14,9 +14,15 @@ const add = (message) => {
     })
 }
 
-const getStore = async () => {
+const getStore = async (idChat) => {
     return new Promise((resolve,reject) => {
-        Model.find({})
+        let filterUser = {}
+        if(idChat){
+            filterUser = {
+                chat: idChat,
+            }
+        }
+        Model.find(filterUser)
             .populate('user') // CAMPO DE NUESTRO MODELO ACTUAL QUE ESTAMOS REFERENCIANDO
             .exec((error, populated) => {
                 if(error){

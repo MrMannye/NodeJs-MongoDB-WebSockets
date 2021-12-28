@@ -7,7 +7,7 @@ const controller = require('./controller')
 
 router.get('/', async (req,res) => {
     try{
-        const action = await controller.getMessages();
+        const action = await controller.getMessages(req.query.chat || null);
         response.success(req,res,action, 200);
     }catch(err){
         response.error(req,res,err,500);
@@ -19,7 +19,7 @@ router.post('/', async (req,res) => {
     // EN CASO DE QUE SE RESUELVA "TRY" TOMA COMO RESUELTA LA PROMESA Y EJECUTA SUCCESS
     // EN CASO CONTRARIO TENEMOS UN REJECT Y PASAMOS AL CATCH
     try{
-        const action = await controller.addMessage(req.body.user,req.body.message)
+        const action = await controller.addMessage(req.body.chat,req.body.user,req.body.message)
         response.success(req,res,action, 200);
         console.log(action)
     } catch (error){

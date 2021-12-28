@@ -3,13 +3,14 @@ const store = require('./store');
 // FUNCION EXPRESIVA ASINCRONA QUE DEVUELVE UNA PROMESA QUE EN CASO DE QUE SE RESULVA
 // MANDA UN OBJETO COMO RESPUESTA Y EN CASO CONTRARIO UN REJECT PARA SER TOMADO POR NUESTRO
 // TRY CATCH DE NUESTRA RUTA 
-const addMessage = async (user,message) => {
+const addMessage = async (chat, user,message) => {
     return new Promise(async (resolve,reject) => {
-        if(!user || !message){
+        if(!user || !message || !chat){
             console.log("[messageController] Informacion Invalida");
             reject(new Error("Se requiere user y message"))
         }
         const fullMessage = {
+            chat: chat,
             user: user,
             message, message,
             date: new Date()
@@ -26,10 +27,10 @@ const addMessage = async (user,message) => {
     });
 }
 
-const getMessages = () =>{
+const getMessages = (idChat) =>{
     return new Promise(async(resolve,reject) => {
         try {
-            const dbMessage = await store.getStore();
+            const dbMessage = await store.getStore(idChat);
             resolve(dbMessage);
         } catch (error) {
             reject(error);
