@@ -17,7 +17,6 @@ var storage = multer.diskStorage({
 })
 var upload = multer({ storage: storage })
 
-
 router.get('/', async (req, res) => {
     try {
         const action = await controller.getMessages(req.query.chat || null);

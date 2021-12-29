@@ -1,3 +1,4 @@
+const { socket } = require('../../socket');
 const store = require('./store');
 
 // FUNCION EXPRESIVA ASINCRONA QUE DEVUELVE UNA PROMESA QUE EN CASO DE QUE SE RESULVA
@@ -20,6 +21,7 @@ const addMessage = async (chat, user,message) => {
             try{
                 const dbMessage = await store.add(fullMessage);
                 console.log(dbMessage);
+                socket.io.emit('message', fullMessage);
                 resolve(fullMessage);
             }catch(err){
                 reject("[controller] Error")
